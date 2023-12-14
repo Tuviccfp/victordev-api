@@ -8,7 +8,7 @@ app.use(cors());
 app.use(exp.json());
 const acess = process.env.PORT || 3000;
 
-mong.connect(process.env.MONGODB_URI).then((result) => {
+mong.connect('mongodb+srv://victorfraguaspires:RpiYP5Ia2y81fAoY@cluster0.ixe3eqw.mongodb.net/?retryWrites=true&w=majority').then((result) => {
     console.log({sucess: true, message: 'Connect in mongo.'});
 }).catch((err) => {
     console.log({sucess: false, message: err});
