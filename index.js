@@ -16,7 +16,7 @@ mong.connect(process.env.MONGO_URL).then((result) => {
 
 app.get('/get-articles', async (req, res) => {
     try {
-        const get = await Article.find({}).sort({ createdAt: -1});
+        const get = await Article.find({}).populate(['titulo', 'short_description', 'createdAt']).sort({ createdAt: -1});
         res.status(200).json(get)
     } catch (error) {
         res.status(500).json({sucess: false, message: error});
