@@ -2,13 +2,13 @@ const exp = require('express');
 const mong = require('mongoose');
 const cors = require('cors');
 const Article = require('./models/articles');
-
+require('dotenv').config()
 const app = exp();
 app.use(cors());
 app.use(exp.json());
 const acess = process.env.PORT || 3000;
 
-mong.connect('mongodb+srv://victorfraguaspires:RpiYP5Ia2y81fAoY@cluster0.ixe3eqw.mongodb.net/?retryWrites=true&w=majority').then((result) => {
+mong.connect(process.env.MONGO_URL).then((result) => {
     console.log({sucess: true, message: 'Connect in mongo.'});
 }).catch((err) => {
     console.log({sucess: false, message: err});
@@ -16,7 +16,7 @@ mong.connect('mongodb+srv://victorfraguaspires:RpiYP5Ia2y81fAoY@cluster0.ixe3eqw
 
 app.get('/get-articles', async (req, res) => {
     try {
-        const get = await Article.find({}).populate(['titulo', 'short_description', 'createdAt']).sort({ createdAt: -1});
+        const get = await Article.find({}).sort({ createdAt: -1});
         res.status(200).json(get)
     } catch (error) {
         res.status(500).json({sucess: false, message: error});
@@ -45,6 +45,7 @@ app.post('/post-articles', async (req, res) => {
             author,
             post,
         })    
+        await newArticle.save()
         res.status(201).json({sucess: true, newArticle: newArticle});
     } catch (error) {
         res.status(500).json({sucess: false, message: error});
