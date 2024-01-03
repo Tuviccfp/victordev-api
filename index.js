@@ -37,13 +37,14 @@ app.get('/get-articles/:id', async (req, res) => {
 });
 
 app.post('/post-articles', async (req, res) => {
-    const { titulo, short_description, author, post } = req.body;
+    const { titulo, short_description, author, post, img } = req.body;
     try {
         const newArticle = new Article({
             titulo,
             short_description,
             author,
             post,
+            img
         })    
         await newArticle.save()
         res.status(201).json({sucess: true, newArticle: newArticle});

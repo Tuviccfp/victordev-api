@@ -5,6 +5,10 @@ const articlesSchema = new mong.Schema({
         type: String,
         required: true,
     },
+    img: {
+        type: String,
+        required: true,
+    },
     short_description: {
         type: String,
         required: true,
